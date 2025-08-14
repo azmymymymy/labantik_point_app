@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -41,7 +42,7 @@ class UserController extends Controller
             $user = Auth::user();
 
             // Get user roles and determine redirect based on app_type
-            $userRoles = $user->roles;  // PERBAIKAN: hilangkan ->with('pivot')->get() 
+            $userRoles = $user->roles;  // PERBAIKAN: hilangkan ->with('pivot')->get()
 
             if ($userRoles->isEmpty()) {
                 Auth::logout();
@@ -203,7 +204,7 @@ class UserController extends Controller
         $permissions = [];
 
         // Get all user roles with their permissions
-        $userRoles = 
+        $userRoles =
         $user->roles()->with(['permissions.actions'])->get();
 
         // Proses permissions seperti yang Anda butuhkan
