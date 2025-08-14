@@ -12,3 +12,4 @@ Route::post('/logout', [App\Http\Controllers\UserController::class, 'logout'])->
 Route::get('/dashboard', [App\Http\Controllers\KesiswaanController::class, 'index'])->name('dashboard');
 
 Route::post('/kesiswaan/store', [App\Http\Controllers\KesiswaanController::class, 'store'])->name('violations.store');
+Route::post('/violations/{student}', [App\Http\Controllers\KesiswaanController::class, 'store'])->name('violations.store');
