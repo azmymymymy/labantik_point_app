@@ -57,7 +57,6 @@ class UserController extends Controller
 
             // Determine user type and redirect accordingly
             $redirectRoute = $this->getRedirectRoute($userRoles, $employee, $student);
-
             return redirect()->intended($redirectRoute)->with('success', 'Login berhasil!');
         }
 
@@ -86,9 +85,8 @@ class UserController extends Controller
             $appType = $role->pivot->app_type ?? null;
 
             switch (strtolower($role->code)) {
-                case 'admin':
-                case 'super_admin':
-                    return '/admin/dashboard';
+
+
 
                 case 'teacher':
                 case 'guru':
@@ -101,6 +99,10 @@ class UserController extends Controller
                 case 'student':
                 case 'siswa':
                     return '/student/dashboard';
+
+                case 'admin':
+                case 'super-admin':
+                    return '/admin/dashboard';
             }
         }
 
@@ -206,9 +208,9 @@ class UserController extends Controller
 
         // Get all user roles with their permissions
         $userRoles =
-        $user->roles()->with(['permissions.actions'])->get();
+            $user->roles()->with(['permissions.actions'])->get();
 
-        
+
 
 
         if (!$user) {
