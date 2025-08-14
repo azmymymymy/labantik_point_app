@@ -201,13 +201,14 @@ class UserController extends Controller
     public function getUserPermissions()
     {
         $userId = Auth::id();
+        $user = User::with('roles.permissions.actions')
+            ->find($userId);
 
         // Get all user roles with their permissions
         $userRoles =
         $user->roles()->with(['permissions.actions'])->get();
 
-        $user = User::with('roles.permissions.actions')
-            ->find($userId);
+        
 
 
         if (!$user) {
