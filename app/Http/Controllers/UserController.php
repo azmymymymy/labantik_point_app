@@ -41,7 +41,7 @@ class UserController extends Controller
             $user = Auth::user();
 
             // Get user roles and determine redirect based on app_type
-            $userRoles = $user->roles;  // PERBAIKAN: hilangkan ->with('pivot')->get() 
+            $userRoles = $user->roles;  // PERBAIKAN: hilangkan ->with('pivot')->get()
 
             if ($userRoles->isEmpty()) {
                 Auth::logout();
@@ -199,15 +199,18 @@ class UserController extends Controller
      */
     public function getUserPermissions()
     {
-        $user = Auth::user(); // Langsung dapatkan user yang login
+        $userId = Auth::id();
+
+        $user = User::with('roles.permissions.actions')
+            ->find($userId);
+
+        if (!$user) {
+            return [];
+        }
+
         $permissions = [];
 
-        // Get all user roles with their permissions
-        $userRoles = 
-        $user->roles()->with(['permissions.actions'])->get();
-
-        // Proses permissions seperti yang Anda butuhkan
-        foreach ($userRoles as $role) {
+        foreach ($user->roles as $role) {
             foreach ($role->permissions as $permission) {
                 $permissionName = $permission->name;
 
@@ -216,7 +219,9 @@ class UserController extends Controller
                 }
 
                 foreach ($permission->actions as $action) {
-                    $permissions[$permissionName][] = $action->action_name;
+                    if (!in_array($action->action_name, $permissions[$permissionName])) {
+                        $permissions[$permissionName][] = $action->action_name;
+                    }
                 }
             }
         }
