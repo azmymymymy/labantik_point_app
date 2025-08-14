@@ -120,6 +120,23 @@
             });
         });
     });
+    document.addEventListener('DOMContentLoaded', function() {
+    // Tangani semua tombol close modal
+    document.querySelectorAll('[data-modal-close]').forEach(button => {
+        button.addEventListener('click', function() {
+            const modalId = this.getAttribute('data-modal-close');
+            const modal = document.getElementById(modalId);
+
+            if(modal) {
+                modal.classList.add('hidden'); // Sembunyikan modal
+
+                // Tambahkan jika menggunakan backdrop
+                const backdrop = document.querySelector('.modal-backdrop');
+                if(backdrop) backdrop.remove();
+            }
+        });
+    });
+});
 </script>
                         </form>
                     </div>
