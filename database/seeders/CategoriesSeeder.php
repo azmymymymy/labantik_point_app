@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CategoriesSeeder extends Seeder
 {
@@ -14,9 +15,9 @@ class CategoriesSeeder extends Seeder
     public function run(): void
     {
         DB::table('p_categories')->insert([
-            ['name' => 'Ringan'],
-            ['name' => 'Sedang'],
-            ['name' => 'Berat'],
+            ['id' => (string) Str::uuid(), 'name' => 'Ringan'],
+            ['id' => (string) Str::uuid(), 'name' => 'Sedang'],
+            ['id' => (string) Str::uuid(), 'name' => 'Berat'],
         ]);
     }
 }

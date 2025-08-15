@@ -14,9 +14,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('p_recaps', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->char('ref_student_id', 36);
-            $table->unsignedBigInteger('p_violation_id');
+            $table->char('p_violation_id', 36);
             $table->enum('status', ['pending', 'verified', 'not_verified'])->default('pending');
             $table->timestamps();
             $table->char('verified_by')->nullable();
