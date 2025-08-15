@@ -11,19 +11,21 @@
                       class="items-center justify-center hidden px-5 text-center h-header group-data-[layout=horizontal]:md:flex group-data-[layout=horizontal]:ltr::pl-0 group-data-[layout=horizontal]:rtl:pr-0">
                       <a href="index.html">
                           <span class="hidden">
-                              <img src="assets/images/logo.png" alt="" class="h-6 mx-auto" />
+                              <img src="{{ asset('assets/images/logo.png') }}" alt="" class="h-6 mx-auto" />
                           </span>
                           <span class="group-data-[topbar=dark]:hidden group-data-[topbar=brand]:hidden">
-                              <img src="assets/images/logo-dark.png" alt="" class="h-6 mx-auto" />
+                              <img src="{{ asset('assets/images/logo-dark.png') }}" alt=""
+                                  class="h-6 mx-auto" />
                           </span>
                       </a>
                       <a href="index.html"
                           class="hidden group-data-[topbar=dark]:block group-data-[topbar=brand]:block">
                           <span class="group-data-[topbar=dark]:hidden group-data-[topbar=brand]:hidden">
-                              <img src="assets/images/logo.png" alt="" class="h-6 mx-auto" />
+                              <img src="{{ asset('assets/images/logo.png') }}" alt="" class="h-6 mx-auto" />
                           </span>
                           <span class="group-data-[topbar=dark]:block group-data-[topbar=brand]:block">
-                              <img src="assets/images/logo-light.png" alt="" class="h-6 mx-auto" />
+                              <img src="{{ asset('assets/images/logo-light.png') }}" alt=""
+                                  class="h-6 mx-auto" />
                           </span>
                       </a>
                   </div>
@@ -34,15 +36,6 @@
                       <i data-lucide="chevrons-left" class="w-5 h-5 group-data-[sidebar-size=sm]:hidden"></i>
                       <i data-lucide="chevrons-right" class="hidden w-5 h-5 group-data-[sidebar-size=sm]:block"></i>
                   </button>
-
-                  <div
-                      class="relative hidden ltr:ml-3 rtl:mr-3 lg:block group-data-[layout=horizontal]:hidden group-data-[layout=horizontal]:lg:block">
-                      <input type="text"
-                          class="py-2 pr-4 text-sm text-topbar-item bg-topbar border border-topbar-border rounded pl-8 placeholder:text-slate-400 form-control focus-visible:outline-0 min-w-[300px] focus:border-blue-400 group-data-[topbar=dark]:bg-topbar-dark group-data-[topbar=dark]:border-topbar-border-dark group-data-[topbar=dark]:placeholder:text-slate-500 group-data-[topbar=dark]:text-topbar-item-dark group-data-[topbar=brand]:bg-topbar-brand group-data-[topbar=brand]:border-topbar-border-brand group-data-[topbar=brand]:placeholder:text-blue-300 group-data-[topbar=brand]:text-topbar-item-brand group-data-[topbar=dark]:dark:bg-zink-700 group-data-[topbar=dark]:dark:border-zink-500 group-data-[topbar=dark]:dark:text-zink-100"
-                          placeholder="Search for ..." autocomplete="off" />
-                      <i data-lucide="search"
-                          class="inline-block size-4 absolute left-2.5 top-2.5 text-topbar-item fill-slate-100 group-data-[topbar=dark]:fill-topbar-item-bg-hover-dark group-data-[topbar=dark]:text-topbar-item-dark group-data-[topbar=brand]:fill-topbar-item-bg-hover-brand group-data-[topbar=brand]:text-topbar-item-brand group-data-[topbar=dark]:dark:text-zink-200 group-data-[topbar=dark]:dark:fill-zink-600"></i>
-                  </div>
 
                   <div class="flex gap-3 ms-auto">
                       <div class="relative flex items-center dropdown h-header">
@@ -326,7 +319,7 @@
                               class="inline-block p-0 transition-all duration-200 ease-linear bg-topbar rounded-full text-topbar-item dropdown-toggle btn hover:bg-topbar-item-bg-hover hover:text-topbar-item-hover group-data-[topbar=dark]:text-topbar-item-dark group-data-[topbar=dark]:bg-topbar-dark group-data-[topbar=dark]:hover:bg-topbar-item-bg-hover-dark group-data-[topbar=dark]:hover:text-topbar-item-hover-dark group-data-[topbar=brand]:bg-topbar-brand group-data-[topbar=brand]:hover:bg-topbar-item-bg-hover-brand group-data-[topbar=brand]:hover:text-topbar-item-hover-brand group-data-[topbar=dark]:dark:bg-zink-700 group-data-[topbar=dark]:dark:hover:bg-zink-600 group-data-[topbar=brand]:text-topbar-item-brand group-data-[topbar=dark]:dark:hover:text-zink-50 group-data-[topbar=dark]:dark:text-zink-200"
                               id="dropdownMenuButton" data-bs-toggle="dropdown">
                               <div class="bg-pink-100 rounded-full">
-                                  <img src="assets/images/profile.png" alt=""
+                                  <img src="{{ asset('assets/images/profile.png') }}" alt=""
                                       class="w-[37.5px] h-[37.5px] rounded-full" />
                               </div>
                           </button>
@@ -338,7 +331,7 @@
                               <a href="#!" class="flex gap-3 mb-3">
                                   <div class="relative inline-block shrink-0">
                                       <div class="rounded bg-slate-100 dark:bg-zink-500">
-                                          <img src="assets/images/profile.png" alt=""
+                                          <img src="{{ asset('assets/images/profile.png') }}" alt=""
                                               class="w-12 h-12 rounded" />
                                       </div>
                                       <span

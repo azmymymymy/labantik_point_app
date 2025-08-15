@@ -129,6 +129,24 @@ class RefStudent extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function recaps()
+    {
+        return $this->hasMany(P_Recaps::class, 'ref_student_id');
+    }
+
+    public function violations()
+    {
+        return $this->hasManyThrough(
+            P_Violations::class, // model tujuan
+            P_Recaps::class,     // model perantara
+            'ref_student_id',    // FK di p_recaps → ref_students
+            'id',                // PK di p_violations
+            'id',                // PK di ref_students
+            'p_violation_id'     // FK di p_recaps → p_violations
+        );
+    }
+
+
     /**
      * Get all academic years for the student.
      */
@@ -144,7 +162,7 @@ class RefStudent extends Model
     {
         $currentYear = date('Y');
         return $this->hasMany(RefStudentAcademicYear::class, 'student_id')
-                   ->where('academic_year', 'like', "{$currentYear}%");
+            ->where('academic_year', 'like', "{$currentYear}%");
     }
 
     /**
@@ -153,11 +171,11 @@ class RefStudent extends Model
     public function currentClass(): BelongsTo
     {
         $currentAcademicYear = $this->currentAcademicYear()->first();
-        
+
         if ($currentAcademicYear && $currentAcademicYear->class_id) {
             return $this->belongsTo(RefClass::class, 'class_id');
         }
-        
+
         return $this->belongsTo(RefClass::class, 'class_id')->whereNull('id');
     }
 
@@ -184,7 +202,7 @@ class RefStudent extends Model
     public function getBmiCategoryAttribute(): ?string
     {
         $bmi = $this->getBmiAttribute();
-        
+
         if (!$bmi) {
             return null;
         }
@@ -257,9 +275,9 @@ class RefStudent extends Model
      */
     public function getFamilyIncomeAttribute(): int
     {
-        return ($this->guardian_income ?? 0) + 
-               ($this->mother_income ?? 0) + 
-               ($this->custodian_income ?? 0);
+        return ($this->guardian_income ?? 0) +
+            ($this->mother_income ?? 0) +
+            ($this->custodian_income ?? 0);
     }
 
     /**
@@ -270,7 +288,7 @@ class RefStudent extends Model
     public function getFormattedFamilyIncomeAttribute(): string
     {
         $income = $this->getFamilyIncomeAttribute();
-        
+
         if ($income === 0) {
             return 'Tidak tersedia';
         }
@@ -285,9 +303,9 @@ class RefStudent extends Model
     {
         return $query->where(function ($query) use ($search) {
             $query->where('full_name', 'like', "%{$search}%")
-                  ->orWhere('student_number', 'like', "%{$search}%")
-                  ->orWhere('national_student_number', 'like', "%{$search}%")
-                  ->orWhere('student_id', 'like', "%{$search}%");
+                ->orWhere('student_number', 'like', "%{$search}%")
+                ->orWhere('national_student_number', 'like', "%{$search}%")
+                ->orWhere('student_id', 'like', "%{$search}%");
         });
     }
 
@@ -332,7 +350,7 @@ class RefStudent extends Model
     {
         return $query->whereHas('academicYears', function ($query) use ($classId, $academicYear) {
             $query->where('class_id', $classId);
-            
+
             if ($academicYear) {
                 $query->where('academic_year', $academicYear);
             }
@@ -345,7 +363,7 @@ class RefStudent extends Model
     public function scopeActive($query)
     {
         return $query->whereNotNull('user_id')
-                    ->whereHas('user');
+            ->whereHas('user');
     }
 
     /**
@@ -366,8 +384,13 @@ class RefStudent extends Model
     public function hasCompleteProfile(): bool
     {
         $requiredFields = [
-            'full_name', 'student_number', 'gender', 'religion', 
-            'address', 'guardian_name', 'guardian_phone'
+            'full_name',
+            'student_number',
+            'gender',
+            'religion',
+            'address',
+            'guardian_name',
+            'guardian_phone'
         ];
 
         foreach ($requiredFields as $field) {
@@ -387,7 +410,7 @@ class RefStudent extends Model
     public function getCurrentGradeLevel(): ?int
     {
         $currentAcademicYear = $this->currentAcademicYear()->first();
-        
+
         if ($currentAcademicYear && $currentAcademicYear->class) {
             return $currentAcademicYear->class->academic_level;
         }

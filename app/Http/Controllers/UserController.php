@@ -90,11 +90,11 @@ class UserController extends Controller
 
                 case 'teacher':
                 case 'guru':
-                    return '/teacher/dashboard';
+                    return '/kesiswaan/dashboard';
 
-                case 'staff':
-                case 'karyawan':
-                    return '/staff/dashboard';
+                case 'bk':
+                case 'guru-bk':
+                    return '/bk/dashboard';
 
                 case 'student':
                 case 'siswa':

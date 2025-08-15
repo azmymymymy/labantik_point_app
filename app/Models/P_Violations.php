@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class P_Violations extends Model
 {
@@ -27,13 +28,27 @@ class P_Violations extends Model
         'point',
     ];
 
+    public $incrementing = false; // Karena bukan auto increment
+    protected $keyType = 'string'; // UUID adalah string
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+        });
+    }
+
     /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
      */
     protected $casts = [
-        'p_category_id' => 'integer',
+        'p_category_id' => 'string',
         'point' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
@@ -79,5 +94,9 @@ class P_Violations extends Model
     public function getFormattedPointAttribute()
     {
         return $this->point . ' Point' . ($this->point > 1 ? 's' : '');
+    }
+    public function recaps()
+    {
+        return $this->hasMany(P_Recaps::class, 'p_violation_id');
     }
 }

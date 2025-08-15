@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('p_violations', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('p_category_id');
+            $table->uuid('id')->primary();
+            $table->char('p_category_id', 36);
             $table->string('name');
             $table->unsignedInteger('point');
             $table->timestamps();
