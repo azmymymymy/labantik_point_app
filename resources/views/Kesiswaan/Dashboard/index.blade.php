@@ -20,7 +20,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h6 class="mb-4 text-15">Hoverable</h6>
+                    <h6 class="mb-4 text-15">Datatable Siswa</h6>
                     <table id="hoverableTable" style="width: 100%" class="hover group">
                         <thead>
                             <tr>
