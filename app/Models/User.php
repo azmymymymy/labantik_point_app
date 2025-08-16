@@ -124,7 +124,7 @@ class User extends Authenticatable
             'user_id',
             'role_id'
         )->withPivot(['app_type', 'created_by', 'updated_by'])
-          ->withTimestamps();
+            ->withTimestamps();
     }
 
     /**
@@ -154,7 +154,7 @@ class User extends Authenticatable
     {
         $query = $this->roles()->where(function ($query) use ($roleName) {
             $query->where('name', $roleName)
-                  ->orWhere('code', $roleName);
+                ->orWhere('code', $roleName);
         });
 
         if ($appType) {
@@ -175,7 +175,7 @@ class User extends Authenticatable
     {
         $query = $this->roles()->where(function ($query) use ($roles) {
             $query->whereIn('name', $roles)
-                  ->orWhereIn('code', $roles);
+                ->orWhereIn('code', $roles);
         });
 
         if ($appType) {
@@ -208,7 +208,7 @@ class User extends Authenticatable
                     if (!$actionName) {
                         return true;
                     }
-                    
+
                     foreach ($permission->actions as $action) {
                         if ($action->action_name === $actionName) {
                             return true;
@@ -229,25 +229,25 @@ class User extends Authenticatable
     public function getFullProfile(): array
     {
         $profile = $this->toArray();
-        
+
         // Add employee data if exists
         if ($this->employee) {
             $profile['employee'] = $this->employee->toArray();
         }
-        
+
         // Add student data if exists
         if ($this->student) {
             $profile['student'] = $this->student->toArray();
         }
-        
+
         // Add class data if exists
         if ($this->class) {
             $profile['class'] = $this->class->toArray();
         }
-        
+
         // Add roles
         $profile['roles'] = $this->roles->toArray();
-        
+
         return $profile;
     }
 
@@ -261,11 +261,11 @@ class User extends Authenticatable
         if ($this->employee) {
             return 'employee';
         }
-        
+
         if ($this->student) {
             return 'student';
         }
-        
+
         return 'user';
     }
 
@@ -277,9 +277,9 @@ class User extends Authenticatable
         return $query->whereHas('roles', function ($query) use ($roleName, $appType) {
             $query->where(function ($query) use ($roleName) {
                 $query->where('name', $roleName)
-                      ->orWhere('code', $roleName);
+                    ->orWhere('code', $roleName);
             });
-            
+
             if ($appType) {
                 $query->wherePivot('app_type', $appType);
             }
@@ -312,7 +312,7 @@ class User extends Authenticatable
         if ($this->avatar) {
             return asset('storage/' . $this->avatar);
         }
-        
+
         // Return default avatar or gravatar
         return 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=150&d=mp';
     }

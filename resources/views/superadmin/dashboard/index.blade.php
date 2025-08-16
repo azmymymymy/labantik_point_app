@@ -30,7 +30,6 @@
                                 <th>NISN</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Kelas</th>
-d                              <th>Ditambah Oleh</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -74,10 +73,6 @@ d                              <th>Ditambah Oleh</th>
                                         <div class="p-4 overflow-y-auto" style="height: 475px">
                                             <form method="POST" action="{{ route('superadmin.violations.store', $murid->id) }}">
     @csrf
-
-
-
-
 
                                                 <div class="flex items-center justify-between mb-3">
                                                     <h5 class="text-16 font-medium">Pilih Violations:</h5>
