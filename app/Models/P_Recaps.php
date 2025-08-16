@@ -49,4 +49,21 @@ class P_Recaps extends Model
     {
         return $this->belongsTo(P_Violations::class, 'p_violation_id');
     }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    // Relasi ke User yang mengupdate record
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    // Relasi ke User yang memverifikasi record
+    public function verifiedBy()
+    {
+        return $this->belongsTo(User::class, 'verified_by');
+    }
 }

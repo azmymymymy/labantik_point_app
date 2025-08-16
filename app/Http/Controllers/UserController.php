@@ -96,13 +96,13 @@ class UserController extends Controller
                 case 'guru-bk':
                     return '/bk/dashboard';
 
-                case 'student':
-                case 'siswa':
+                case 'wakel':
+                case 'wal':
                     return '/student/dashboard';
 
                 case 'admin':
                 case 'super-admin':
-                    return '/admin/dashboard';
+                    return '/superadmin/dashboard';
             }
         }
 

@@ -17,44 +17,24 @@ class BKController extends Controller
         // Get students who have violations with their violation details
         $students = RefStudent::with([
             'recaps.violation', // Eager load violation details
-            'currentAcademicYear.class' // For class information
+            'currentAcademicYear.class',
+            'verifiedBy',
+            'createdBy',
+            'updatedBy',
+            // For class information
         ])
-        ->withCount([
-            'recaps as recaps_count' => function($query) {
-                $query->where('status', 'pending'); // Count only pending
-            }
-        ])
-        ->has('recaps') // Only students with violations
-        ->get();
+            ->withCount([
+                'recaps as recaps_count' => function ($query) {}
+            ])
+            ->has('recaps') // Only students with violations
+            ->get();
 
-        return view('BK.dashboard.index', compact('students','recaps'));
+        return view('BK.dashboard.index', compact('students', 'recaps',));
     }
 
     // Update violation status dengan debug yang sangat detail
     public function updateViolationStatus(Request $request, $id)
     {
-        // Debug 1: Log semua data yang masuk
-        Log::info('=== UPDATE VIOLATION STATUS DEBUG ===', [
-            'received_id' => $id,
-            'request_method' => $request->method(),
-            'request_all' => $request->all(),
-            'route_parameters' => $request->route()->parameters(),
-            'user_authenticated' => Auth::check(),
-            'user_id' => Auth::id(),
-            'timestamp' => now()
-        ]);
-
-        // Debug 2: Tampilkan di browser untuk debugging real-time
-        if ($request->has('debug')) {
-            dd([
-                'id' => $id,
-                'status' => $request->status,
-                'method' => $request->method(),
-                'all_data' => $request->all(),
-                'user' => Auth::user(),
-                'route_params' => $request->route()->parameters()
-            ]);
-        }
 
         // Validasi input
         $request->validate([
@@ -121,15 +101,16 @@ class BKController extends Controller
             ]);
 
             if ($saved && $originalStatus !== $recap->status) {
-                return redirect()->back()->with('success',
-                    "Status berhasil diubah dari '{$originalStatus}' ke '{$recap->status}' (ID: {$recap->getKey()})"
+                return redirect()->back()->with(
+                    'success',
+                    "Status berhasil diubah dari '{$originalStatus}' ke '{$recap->status}' "
                 );
             } else {
-                return redirect()->back()->with('warning',
+                return redirect()->back()->with(
+                    'warning',
                     'Data disimpan tetapi status tidak berubah. Original: ' . $originalStatus . ', Current: ' . $recap->status
                 );
             }
-
         } catch (\Exception $e) {
             Log::error('Exception in updateViolationStatus', [
                 'id' => $id,
@@ -139,7 +120,8 @@ class BKController extends Controller
                 'stack_trace' => $e->getTraceAsString()
             ]);
 
-            return redirect()->back()->with('error',
+            return redirect()->back()->with(
+                'error',
                 'Error: ' . $e->getMessage() . ' (Line: ' . $e->getLine() . ')'
             );
         }

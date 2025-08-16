@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class KesiswaanController extends Controller
 {
+
     public function index()
     {
+
         // Ambil semua siswa
         $students = RefStudent::all();
 
@@ -24,6 +26,8 @@ class KesiswaanController extends Controller
 
     public function store(Request $request, $studentId)
     {
+        dd(Auth::id(), Auth::user());
+
         // Validasi input
         $request->validate([
             'violations'   => 'required|array',
@@ -36,8 +40,8 @@ class KesiswaanController extends Controller
                 'ref_student_id'  => $studentId,
                 'p_violation_id'  => $violationId,
                 'status'          => 'pending', // default status
-                'created_by'      => auth()->id(),
-                'updated_by'      => auth()->id(),
+                'created_by' => Auth::name() ?? 'system',
+                'updated_by' => Auth::name() ?? 'system',
             ]);
         }
 
@@ -46,63 +50,29 @@ class KesiswaanController extends Controller
 
     public function recaps(Request $request)
     {
-        $categoryFilter = $request->input('category_filter');
-        $statusFilter = $request->input('status_filter');
-
-        $query = RefStudent::whereHas('recaps')
+        $recaps = RefStudent::whereHas('recaps')
             ->with([
-                'recaps' => function ($query) use ($categoryFilter, $statusFilter) {
-                    if ($categoryFilter) {
-                        $query->whereHas('violation.category', function ($q) use ($categoryFilter) {
-                            $q->where('name', $categoryFilter);
-                        });
-                    }
-
-                    if ($statusFilter) {
-                        $query->where('status', $statusFilter);
-                    }
-
-                    $query->with('violation.category');
+                'recaps' => function ($query) {
+                    $query->where('status', 'verified') // filter hanya recap verified
+                        ->with([
+                            'violation.category',
+                            'verifiedBy',
+                            'createdBy',
+                            'updatedBy',
+                        ]);
                 },
                 'user.class'
             ])
-            ->withSum(['violations' => function ($query) use ($categoryFilter, $statusFilter) {
-                if ($categoryFilter) {
-                    $query->whereHas('violation.category', function ($q) use ($categoryFilter) {
-                        $q->where('name', $categoryFilter);
-                    });
-                }
+            ->withSum(['violations as violations_sum_point' => function ($query) {
+                // hanya hitung poin dari violations yang recap-nya verified
+                $query->whereHas('recaps', function ($q) {
+                    $q->where('status', 'verified');
+                });
+            }], 'point')
+            ->get()
+            ->unique('id');
 
-                if ($statusFilter) {
-                    $query->where('status', $statusFilter);
-                }
-            }], 'point');
 
-        // Filter students yang memiliki violations sesuai kriteria
-        if ($categoryFilter || $statusFilter) {
-            $query->whereHas('recaps', function ($query) use ($categoryFilter, $statusFilter) {
-                if ($categoryFilter) {
-                    $query->whereHas('violation.category', function ($q) use ($categoryFilter) {
-                        $q->where('name', $categoryFilter);
-                    });
-                }
-
-                if ($statusFilter) {
-                    $query->where('status', $statusFilter);
-                }
-            });
-        }
-
-        $recaps = $query->get()->unique('id');
-
-        // Ambil data untuk dropdown filter
-        $categories = ['Ringan', 'Sedang', 'Berat'];
-        $statuses = [
-            'verified' => 'Terverifikasi',
-            'pending' => 'Pending',
-            'not-verified' => 'Tidak Terverifikasi'
-        ];
-
-        return view('kesiswaan.dashboard.recaps', compact('recaps', 'categories', 'statuses', 'categoryFilter', 'statusFilter'));
+        return view('kesiswaan.dashboard.recaps', compact('recaps'));
     }
 }

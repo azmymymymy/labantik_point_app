@@ -86,14 +86,16 @@
                                       </p>
                                   </div>
                               </a>
-                              <ul>
-                                  <li class="pt-2 mt-2 border-t border-slate-200 dark:border-zink-500">
-                                      <a class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500"
-                                          href="auth-logout-basic.html"><i data-lucide="log-out"
-                                              class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>
-                                          Sign Out</a>
-                                  </li>
-                              </ul>
+                              <ul><li class="pt-2 mt-2 border-t border-slate-200 dark:border-zink-500">
+    <form action="{{ route('logout') }}" method="POST" class="w-full">
+        @csrf
+        <button type="submit"
+            class="block w-full text-left ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500 bg-transparent border-none cursor-pointer">
+            <i data-lucide="log-out" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>
+            Sign Out
+        </button>
+    </form>
+</li>
                           </div>
                       </div>
                   </div>
