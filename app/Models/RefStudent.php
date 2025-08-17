@@ -131,25 +131,12 @@ class RefStudent extends Model
 
     public function recaps()
     {
-        return $this->hasMany(P_Recaps::class, 'ref_student_id');
+        return $this->hasMany(P_Recaps::class, 'ref_student_id', 'id');
     }
 
     public function pRecaps()
     {
         return $this->hasMany(P_Recaps::class, 'ref_student_id', 'id');
-    }
-
-    public function createdBy()
-    {
-        return $this->hasMany(P_Recaps::class, 'created_by', 'id');
-    }
-    public function updatedBy()
-    {
-        return $this->hasMany(P_Recaps::class, 'updated_by', 'id');
-    }
-    public function verifiedBy()
-    {
-        return $this->hasMany(P_Recaps::class, 'verified_by', 'id');
     }
 
     public function violations()
