@@ -18,9 +18,6 @@ class BKController extends Controller
         $students = RefStudent::with([
             'recaps.violation', // Eager load violation details
             'currentAcademicYear.class',
-            'verifiedBy',
-            'createdBy',
-            'updatedBy',
             // For class information
         ])
             ->withCount([
@@ -141,5 +138,31 @@ class BKController extends Controller
                 'fillable' => (new P_Recaps)->getFillable(),
             ]
         ]);
+    }
+    public function recaps(Request $request)
+    {
+        $recaps = RefStudent::whereHas('recaps')
+            ->with([
+                'recaps' => function ($query) {
+                    $query->with([
+                        'violation.category',
+                        'verifiedBy',
+                        'createdBy',
+                        'updatedBy',
+                    ]);
+                },
+                'user.class'
+            ])
+            ->withSum(['violations as violations_sum_point' => function ($query) {
+                // hanya hitung poin dari violations yang recap-nya verified
+                $query->whereHas('recaps', function ($q) {
+                    $q->where('status', 'verified');
+                });
+            }], 'point')
+            ->get()
+            ->unique('id');
+
+
+        return view('BK.dashboard.recaps', compact('recaps'));
     }
 }

@@ -110,24 +110,18 @@
                     <table id="hoverableTable" style="width: 100%" class="hover group">
                         <thead>
                             <tr>
+                                <th>Aksi</th>
                                 <th>No</th>
                                 <th>Nama Lengkap</th>
                                 <th>NIS</th>
                                 <th>NISN</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Kelas</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($students as $murid)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $murid->full_name }}</td>
-                                    <td>{{ $murid->student_number }}</td>
-                                    <td>{{ $murid->national_identification_number }}</td>
-                                    <td>{{ $murid->gender }}</td>
-                                    <td>{{ $murid->user->class->name }}</td>
                                     <td>
                                         <!-- Tombol buka modal -->
                                         <button data-modal-target="modal-{{ $murid->id }}" type="button"
@@ -141,6 +135,12 @@
                                         </button>
 
                                     </td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $murid->full_name }}</td>
+                                    <td>{{ $murid->student_number }}</td>
+                                    <td>{{ $murid->national_identification_number }}</td>
+                                    <td>{{ $murid->gender }}</td>
+                                    <td>{{ $murid->user->class->name }}</td>
                                 </tr>
 
                                 <!-- Modal untuk siswa ini -->
@@ -173,19 +173,12 @@
                                                 </div>
 
                                                 <div class="space-y-4">
-                                                    @foreach ($categories as $category)
+                                                    @foreach ($vals as $violation)
                                                         <div>
-                                                            <h4 class="font-medium mb-1">
-                                                                @if ($loop->index == 2)
-                                                                    (5-10 poin)
-                                                                @elseif ($loop->index == 1)
-                                                                    (10-25 poin)
-                                                                @elseif ($loop->index == 0)
-                                                                    (25+ poin)
-                                                                @endif
-                                                            </h4>
+
                                                             <div class="ml-2">
-                                                                @foreach ($category->violations->sortBy('id') as $violation)
+                                                                {{-- Ubah dari sortByDesc ke sortBy --}}
+
                                                                     <div class="flex items-center py-1">
                                                                         <input type="checkbox" name="violations[]"
                                                                             value="{{ $violation->id }}"
@@ -194,11 +187,14 @@
                                                                         <label for="violation_{{ $violation->id }}"
                                                                             class="ml-2 text-sm cursor-pointer select-none">
                                                                             {{ $violation->name }}
+                                                                            ({{ $violation->point }} poin)
                                                                         </label>
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
+                    </div>
+
+            </div>
+        </div>
+
+
                                                     @endforeach
 
                                                 </div>

@@ -14,16 +14,15 @@ class KesiswaanController extends Controller
 {
 
     public function index()
-    {
+{
+    // Ambil semua siswa
+    $students = RefStudent::with('recaps')->get();
 
-        // Ambil semua siswa
-        $students = RefStudent::with('recaps')->get();
+    // Ambil semua violations dengan sorting langsung di controller
+    $vals = P_Violations::with('category')->orderBy('point', 'asc')->get();
 
-        // Ambil semua violations
-        $categories = P_Categories::with('violations')->get();
-
-        return view('kesiswaan.dashboard.index', compact('students', 'categories'));
-    }
+    return view('kesiswaan.dashboard.index', compact('students', 'vals'));
+}
 
     public function store(Request $request, $studentId)
     {

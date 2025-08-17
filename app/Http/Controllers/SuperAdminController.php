@@ -15,11 +15,12 @@ class SuperAdminController extends Controller
     public function index()
     {
         // Ambil semua siswa
-        $students = RefStudent::all();
+        $students = RefStudent::with('recaps')->get();
 
-        // Ambil semua violations
-        $categories = P_Categories::with('violations')->get();
-        return view('superadmin.dashboard.index', compact('students', 'categories'));
+        // Ambil semua violations dengan sorting langsung di controller
+        $vals = P_Violations::with('category')->orderBy('point', 'asc')->get();
+
+        return view('superadmin.dashboard.index', compact('students', 'vals'));
     }
     public function store(Request $request, $studentId)
     {
@@ -163,7 +164,7 @@ class SuperAdminController extends Controller
             $recap = P_Recaps::findOrFail($id);
 
             $request->validate([
-                'status' => 'required|in:verified,not_verified'
+                'status' => 'required|in:verified,not_verified,pending'
             ]);
 
             $recap->update([
