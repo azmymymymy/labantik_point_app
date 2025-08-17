@@ -6,15 +6,19 @@
 
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Konfirmasi Rekap Pelanggaran</h5>
+                    <h5 class="text-16">Rekap & Konfirmasi Pelanggaran</h5>
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li
                         class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
                         <a href="#!" class="text-slate-400 dark:text-zink-200">Dashboards</a>
                     </li>
+                    <li
+                        class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
+                        <a href="#!" class="text-slate-400 dark:text-zink-200">Super Admin</a>
+                    </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Super Admin
+                        Rekap & Verifikasi Pelanggaran
                     </li>
                 </ul>
             </div>
@@ -74,13 +78,13 @@
                     <table id="hoverableTable" style="width: 100%" class="hover group">
                         <thead>
                             <tr>
+                                <th>Aksi</th>
                                 <th>No</th>
                                 <th>Nama Lengkap</th>
                                 <th>NIS</th>
                                 <th>NISN</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Kelas</th>
-                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,12 +95,6 @@
                                 @if ($pendingCount > 0)
                                     <tr class="student-row" data-class="{{ $student->user->class->name }}"
                                         data-gender="{{ $student->gender }}">
-                                        <td class="row-number">{{ $loop->iteration }}</td>
-                                        <td>{{ $student->full_name }}</td>
-                                        <td>{{ $student->student_number }}</td>
-                                        <td>{{ $student->national_student_number }}</td>
-                                        <td>{{ $student->gender }}</td>
-                                        <td>{{ $student->user->class->name }}</td>
                                         <td>
                                             <div class="flex gap-2">
 
@@ -123,6 +121,12 @@
                                                 </button>
                                             </div>
                                         </td>
+                                        <td class="row-number">{{ $loop->iteration }}</td>
+                                        <td>{{ $student->full_name }}</td>
+                                        <td>{{ $student->student_number }}</td>
+                                        <td>{{ $student->national_student_number }}</td>
+                                        <td>{{ $student->gender }}</td>
+                                        <td>{{ $student->user->class->name }}</td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -155,7 +159,8 @@
                             <!-- Header Modal - Fixed -->
                             <div
                                 class="modal-header flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500 flex-shrink-0">
-                                <h5 class="text-16 font-semibold">Detail Rekap Pelanggaran - {{ $student->full_name }}</h5>
+                                <h5 class="text-16 font-semibold">Detail Rekap Pelanggaran - {{ $student->full_name }}
+                                </h5>
                                 <button data-modal-close="modal-detail-{{ $student->id }}"
                                     class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500 dark:text-zink-200 dark:hover:text-red-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -198,8 +203,8 @@
                                                     class="detail-status-filter w-full px-3 py-2 text-sm border border-slate-200 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-zink-600 dark:border-zink-500 dark:text-zink-100">
                                                     <option value="">Semua Status</option>
                                                     <option value="pending">Pending</option>
-                                                    <option value="verified">Verified</option>
-                                                    <option value="rejected">Rejected</option>
+                                                    <option value="verified">Verifikasi</option>
+                                                    <option value="not_verified">Tidak Terverifikasi</option>
                                                 </select>
                                             </div>
                                             <div class="flex items-end">
@@ -248,6 +253,9 @@
                                                         <th scope="col"
                                                             class="px-4 py-4 w-24 font-semibold text-slate-700 dark:text-zink-200">
                                                             Diupdate oleh</th>
+                                                        <th scope="col"
+                                                            class="px-4 py-4 w-24 font-semibold text-slate-700 dark:text-zink-200">
+                                                            Aksi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -449,7 +457,7 @@
                                                 </thead>
                                                 <tbody>
                                                     @php $counter = 1; @endphp
-                                                    @forelse ($student->recaps->where('status', 'pending') as $recap)
+                                                    @forelse ($student->recaps->where('status', 'pending' && 'verified') as $recap)
                                                         <tr class="violation-row bg-white border-b dark:bg-zink-800 dark:border-zink-700 hover:bg-slate-50 dark:hover:bg-zink-700"
                                                             data-category="{{ $recap->violation->category->name ?? '' }}">
                                                             <td class="px-3 py-3 font-medium row-number">
@@ -477,10 +485,19 @@
                                                                 </span>
                                                             </td>
                                                             <td class="px-4 py-4">
-                                                                <span
-                                                                    class="px-2 py-1 text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300 rounded-full">
-                                                                    Pending
-                                                                </span>
+                                                                @if ($recap->status == 'pending')
+                                                                    <span
+                                                                        class="px-2 py-1 text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300 rounded-full">
+                                                                        Pending
+                                                                    </span>
+                                                                @endif
+                                                                @if ($recap->status == 'verified')
+                                                                    <span
+                                                                        class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 rounded-full">
+                                                                        Terverifikasi
+                                                                    </span>
+                                                                @endif
+
                                                             </td>
                                                             <td class="px-4 py-4">
                                                                 <span class="text-sm text-slate-600 dark:text-zink-300">
@@ -499,45 +516,71 @@
                                                             </td>
                                                             <td class="px-4 py-4">
                                                                 <div class="flex gap-2">
+
                                                                     <!-- Form untuk verifikasi -->
                                                                     <form method="POST"
                                                                         action="{{ route('superadmin.violation-status.update', $recap->id) }}"
                                                                         class="inline-block">
                                                                         @csrf
                                                                         @method('PUT')
-                                                                        <button type="submit" value="verified"
-                                                                            name="status"
-                                                                            onclick="return confirm('Apakah Anda yakin ingin memverifikasi pelanggaran ini?')"
-                                                                            class="p-2 text-green-600 hover:text-green-700 hover:bg-green-50 rounded-full transition-colors duration-200"
-                                                                            title="Verifikasi">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="16" height="16"
-                                                                                viewBox="0 0 24 24" fill="none"
-                                                                                stroke="currentColor" stroke-width="2"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round">
-                                                                                <polyline points="20,6 9,17 4,12">
-                                                                                </polyline>
-                                                                            </svg>
-                                                                        </button>
-                                                                        <button type="submit" value="not_verified"
-                                                                            name="status"
-                                                                            onclick="return confirm('Apakah Anda yakin ingin menolak pelanggaran ini?')"
-                                                                            class="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors duration-200"
-                                                                            title="Tolak">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="16" height="16"
-                                                                                viewBox="0 0 24 24" fill="none"
-                                                                                stroke="currentColor" stroke-width="2"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round">
-                                                                                <line x1="18" y1="6"
-                                                                                    x2="6" y2="18"></line>
-                                                                                <line x1="6" y1="6"
-                                                                                    x2="18" y2="18"></line>
-                                                                            </svg>
-                                                                        </button>
+                                                                        @if ($recap->status == 'pending')
+                                                                            <button type="submit" value="verified"
+                                                                                name="status"
+                                                                                onclick="return confirm('Apakah Anda yakin ingin memverifikasi pelanggaran ini?')"
+                                                                                class="p-2 text-green-600 hover:text-green-700 hover:bg-green-50 rounded-full transition-colors duration-200"
+                                                                                title="Verifikasi">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    viewBox="0 0 24 24" fill="none"
+                                                                                    stroke="currentColor" stroke-width="2"
+                                                                                    stroke-linecap="round"
+                                                                                    stroke-linejoin="round">
+                                                                                    <polyline points="20,6 9,17 4,12">
+                                                                                    </polyline>
+                                                                                </svg>
+                                                                            </button>
+                                                                            <button type="submit" value="not_verified"
+                                                                                name="status"
+                                                                                onclick="return confirm('Apakah Anda yakin ingin menolak pelanggaran ini?')"
+                                                                                class="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors duration-200"
+                                                                                title="Tolak">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="16" height="16"
+                                                                                    viewBox="0 0 24 24" fill="none"
+                                                                                    stroke="currentColor" stroke-width="2"
+                                                                                    stroke-linecap="round"
+                                                                                    stroke-linejoin="round">
+                                                                                    <line x1="18" y1="6"
+                                                                                        x2="6" y2="18">
+                                                                                    </line>
+                                                                                    <line x1="6" y1="6"
+                                                                                        x2="18" y2="18">
+                                                                                    </line>
+                                                                                </svg>
+                                                                            </button>
+                                                                        @else
+                                                                            <button type="submit" value="pending"
+                                                                                name="status"
+                                                                                onclick="return confirm('Apakah Anda yakin ingin memverifikasi ulang pelanggaran ini?')"
+                                                                                class="p-2 text-orange-600 hover:text-orange-700 hover:bg-orange-50 rounded-full transition-colors duration-200"
+                                                                                title="Verifikasi Ulang">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="24" height="24"
+                                                                                    viewBox="0 0 24 24" fill="none"
+                                                                                    stroke="currentColor" stroke-width="2"
+                                                                                    stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    class="lucide lucide-repeat-icon lucide-repeat">
+                                                                                    <path d="m17 2 4 4-4 4" />
+                                                                                    <path d="M3 11v-1a4 4 0 0 1 4-4h14" />
+                                                                                    <path d="m7 22-4-4 4-4" />
+                                                                                    <path d="M21 13v1a4 4 0 0 1-4 4H3" />
+                                                                                </svg>
+                                                                            </button>
+                                                                        @endif
+
                                                                     </form>
+
                                                                 </div>
                                                             </td>
                                                         </tr>

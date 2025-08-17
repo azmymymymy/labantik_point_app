@@ -28,6 +28,7 @@ Route::prefix('kesiswaan')
 Route::prefix('bk')->name('bk.')->group(function () {
     Route::get('/dashboard', [BKController::class, 'index'])->name('dashboard');
     Route::get('/student-violations/{studentId}', [BKController::class, 'getStudentViolations'])->name('student.violations');
+    Route::get('/recaps', [BKController::class, 'recaps'])->name('recaps');
     Route::put('/violation-status/{id}', [BKController::class, 'updateViolationStatus'])->name('violation-status.update');
 });
 

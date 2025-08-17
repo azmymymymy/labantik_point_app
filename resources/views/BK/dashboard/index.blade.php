@@ -31,6 +31,8 @@
                         <table id="studentsTable" class="w-full whitespace-nowrap">
                             <thead>
                                 <tr class="text-left bg-slate-100 dark:bg-zink-600">
+                                    <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
+                                        Aksi</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">#
                                     </th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
@@ -39,13 +41,25 @@
                                         Kelas</th>
                                     <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
                                         Pelanggaran Pending</th>
-                                    <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">
-                                        Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($students as $index => $student)
                                     <tr class="hover:bg-slate-50 dark:hover:bg-zink-600">
+                                        <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">
+                                            <button data-modal-target="violationsModal-{{ $student->id }}" type="button"
+                                                class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                    </path>
+                                                </svg>
+
+                                            </button>
+                                        </td>
                                         <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">
                                             {{ $index + 1 }}
                                         </td>
@@ -60,20 +74,6 @@
                                                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                                 {{ $student->recaps_count }} Pelanggaran
                                             </span>
-                                        </td>
-                                        <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">
-                                            <button data-modal-target="violationsModal-{{ $student->id }}" type="button"
-                                                class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
-                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                                                    </path>
-                                                </svg>
-
-                                            </button>
                                         </td>
                                     </tr>
                                 @empty
@@ -142,11 +142,11 @@
 
                                         </td>
                                         <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">
-<div> {{ $violation->violation->category->name ?? 'N/A' }}</div>
+                                            <div> {{ $violation->violation->category->name ?? 'N/A' }}</div>
 
                                         </td>
                                         <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">
-<div> {{ $violation->createdBy->name ?? 'N/A' }}</div>
+                                            <div> {{ $violation->createdBy->name ?? 'N/A' }}</div>
 
                                         </td>
                                         <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">
@@ -179,7 +179,13 @@
                                                             class="inline-flex items-center px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700 focus:outline-none text-xs"
                                                             title="Verifikasi ID: {{ $violation->getKey() }}"
                                                             onclick="console.log('Verifying ID: {{ $violation->getKey() }}')">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="lucide lucide-check-icon lucide-check">
+                                                                <path d="M20 6 9 17l-5-5" />
+                                                            </svg>
 
                                                         </button>
                                                     </form>
@@ -195,7 +201,14 @@
                                                             class="inline-flex items-center px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none text-xs"
                                                             title="Tolak ID: {{ $violation->getKey() }}"
                                                             onclick="console.log('Rejecting ID: {{ $violation->getKey() }}')">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="lucide lucide-x-icon lucide-x">
+                                                                <path d="M18 6 6 18" />
+                                                                <path d="m6 6 12 12" />
+                                                            </svg>
                                                         </button>
                                                     </form>
                                                 @else
