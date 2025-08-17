@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" class="light scroll-smooth group" data-layout="vertical" data-sidebar="light" data-sidebar-size="lg" data-mode="light" data-topbar="light" data-skin="default" data-navbar="sticky" data-content="fluid" dir="ltr">
+<html lang="en" class="light scroll-smooth group" data-layout="vertical" data-sidebar="light" data-sidebar-size="lg"
+    data-mode="light" data-topbar="light" data-skin="default" data-navbar="sticky" data-content="fluid" dir="ltr">
 
 <head>
     <meta charset="utf-8">
@@ -15,60 +16,60 @@
     <link rel="stylesheet" href="{{ asset('assets/css/starcode2.css') }}">
 </head>
 
-<body class="flex items-center justify-center min-h-screen py-16 lg:py-10 bg-slate-50 dark:bg-zink-800 dark:text-zink-100 font-public">
+<body
+    class="flex items-center justify-center min-h-screen py-16 lg:py-10 bg-slate-50 dark:bg-zink-800 dark:text-zink-100 font-public">
 
     <div class="relative">
         <!-- SVG Backgrounds -->
         <div class="absolute hidden opacity-50 ltr:-left-16 rtl:-right-16 -top-10 md:block">
             <!-- SVG content -->
         </div>
-        
+
         <div class="absolute hidden -rotate-180 opacity-50 ltr:-right-16 rtl:-left-16 -bottom-10 md:block">
             <!-- SVG content -->
         </div>
- 
+
         <div class="mb-0 w-screen lg:mx-auto lg:w-[500px] card shadow-lg border-none shadow-slate-100 relative">
             <div class="!px-10 !py-12 card-body">
                 <a href="#!">
-                    <img src="{{ asset('assets/images/logo-light.png') }}" alt="" class="hidden h-6 mx-auto dark:block">
-                    <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" class="block h-6 mx-auto dark:hidden">
+                    <img src="{{ asset('assets/images/logo-light.png') }}" alt=""
+                        class="hidden h-6 mx-auto dark:block">
+                    <img src="{{ asset('assets/images/logo-dark.png') }}" alt=""
+                        class="block h-6 mx-auto dark:hidden">
                 </a>
-        
+
                 <div class="mt-8 text-center">
                     <h4 class="mb-1 text-custom-500 dark:text-custom-500">Welcome Back!</h4>
                     <p class="text-slate-500 dark:text-zink-200">Sign in to continue to starcode.</p>
                 </div>
 
                 <!-- Display Success Message -->
-                @if(session('success'))
-                    <div class="px-4 py-3 mb-3 text-sm text-green-500 border border-green-200 rounded-md bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
+                @if (session('success'))
+                    <div
+                        class="px-4 py-3 mb-3 text-sm text-green-500 border border-green-200 rounded-md bg-green-50 dark:bg-green-400/20 dark:border-green-500/50">
                         {{ session('success') }}
                     </div>
                 @endif
 
                 <!-- Display Error Messages -->
-                @if($errors->any())
-                    <div class="px-4 py-3 mb-3 text-sm text-red-500 border border-red-200 rounded-md bg-red-50 dark:bg-red-400/20 dark:border-red-500/50">
-                        @foreach($errors->all() as $error)
+                @if ($errors->any())
+                    <div
+                        class="px-4 py-3 mb-3 text-sm text-red-500 border border-red-200 rounded-md bg-red-50 dark:bg-red-400/20 dark:border-red-500/50">
+                        @foreach ($errors->all() as $error)
                             <div>{{ $error }}</div>
                         @endforeach
                     </div>
                 @endif
-        
+
                 <form action="{{ route('login.authenticate') }}" method="POST" class="mt-10">
                     @csrf
-                    
+
                     <!-- Email Field -->
                     <div class="mb-3">
                         <label for="email" class="inline-block mb-2 text-base font-medium">Email Address</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email"
-                            value="{{ old('email') }}"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 @error('email') border-red-500 @enderror" 
-                            placeholder="Enter your email address"
-                            required>
+                        <input type="email" id="email" name="email" value="{{ old('email') }}"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 @error('email') border-red-500 @enderror"
+                            placeholder="Enter your email address" required>
                         @error('email')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
@@ -77,13 +78,9 @@
                     <!-- Password Field -->
                     <div class="mb-3">
                         <label for="password" class="inline-block mb-2 text-base font-medium">Password</label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 @error('password') border-red-500 @enderror" 
-                            placeholder="Enter your password"
-                            required>
+                        <input type="password" id="password" name="password"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200 @error('password') border-red-500 @enderror"
+                            placeholder="Enter your password" required>
                         @error('password')
                             <div class="mt-1 text-sm text-red-500">{{ $message }}</div>
                         @enderror
@@ -92,63 +89,23 @@
                     <!-- Remember Me -->
                     <div class="mb-4">
                         <div class="flex items-center gap-2">
-                            <input 
-                                id="remember" 
-                                name="remember"
-                                class="border rounded-sm appearance-none size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400" 
-                                type="checkbox" 
-                                value="1">
-                            <label for="remember" class="inline-block text-base font-medium align-middle cursor-pointer">Remember me</label>
+                            <input id="remember" name="remember"
+                                class="border rounded-sm appearance-none size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400"
+                                type="checkbox" value="1">
+                            <label for="remember"
+                                class="inline-block text-base font-medium align-middle cursor-pointer">Remember
+                                me</label>
                         </div>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="mt-10">
-                        <button 
-                            type="submit" 
+                        <button type="submit"
                             class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
                             Sign In
                         </button>
                     </div>
-
-                    <!-- Forgot Password Link -->
-                    <div class="mt-6 text-center">
-                        <a href="#" class="text-sm text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">
-                            Forgot your password?
-                        </a>
-                    </div>
                 </form>
-
-                <!-- Divider -->
-                <div class="relative text-center my-9 before:absolute before:top-3 before:left-0 before:right-0 before:border-t before:border-t-slate-200 dark:before:border-t-zink-500">
-                    <h5 class="inline-block px-2 py-0.5 text-sm bg-white text-slate-500 dark:bg-zink-600 dark:text-zink-200 rounded relative">Or sign in with</h5>
-                </div>
-
-                <!-- Social Login Buttons -->
-                <div class="flex flex-wrap justify-center gap-2">
-                    <button type="button" class="flex items-center justify-center size-[37.5px] transition-all duration-200 ease-linear p-0 text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600">
-                        <i data-lucide="facebook" class="size-4"></i>
-                    </button>
-                    <button type="button" class="flex items-center justify-center size-[37.5px] transition-all duration-200 ease-linear p-0 text-white btn bg-orange-500 border-orange-500 hover:text-white hover:bg-orange-600 hover:border-orange-600">
-                        <i data-lucide="mail" class="size-4"></i>
-                    </button>
-                    <button type="button" class="flex items-center justify-center size-[37.5px] transition-all duration-200 ease-linear p-0 text-white btn bg-sky-500 border-sky-500 hover:text-white hover:bg-sky-600 hover:border-sky-600">
-                        <i data-lucide="twitter" class="size-4"></i>
-                    </button>
-                    <button type="button" class="flex items-center justify-center size-[37.5px] transition-all duration-200 ease-linear p-0 text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 hover:border-slate-600">
-                        <i data-lucide="github" class="size-4"></i>
-                    </button>
-                </div>
-
-                <!-- Sign Up Link -->
-                <div class="mt-10 text-center">
-                    <p class="mb-0 text-slate-500 dark:text-zink-200">
-                        Don't have an account? 
-                        <a href="#" class="font-semibold underline transition-all duration-150 ease-linear text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500">
-                            Sign Up
-                        </a>
-                    </p>
-                </div>
             </div>
         </div>
     </div>

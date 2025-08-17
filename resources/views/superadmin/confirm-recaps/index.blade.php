@@ -406,42 +406,6 @@
                             <!-- Content Modal dengan Filter dan Tabel - Scrollable -->
                             <div class="modal-content flex-1 overflow-hidden">
                                 <div class="p-4 h-full flex flex-col">
-                                    <!-- Filter Section - Fixed -->
-                                    <div
-                                        class="filter-section mb-4 p-3 bg-slate-50 dark:bg-zink-700 rounded-lg flex-shrink-0">
-                                        <div class="flex flex-col sm:flex-row gap-4">
-                                            <div class="flex-1">
-                                                <label for="categoryFilter-{{ $student->id }}"
-                                                    class="block text-sm font-medium text-slate-700 dark:text-zink-300 mb-2">
-                                                    Filter Kategori
-                                                </label>
-                                                <select id="categoryFilter-{{ $student->id }}"
-                                                    data-student-id="{{ $student->id }}"
-                                                    class="category-filter w-full px-3 py-2 text-sm border border-slate-200 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-zink-600 dark:border-zink-500 dark:text-zink-100">
-                                                    <option value="">Semua Kategori</option>
-                                                    <option value="Ringan">Ringan</option>
-                                                    <option value="Sedang">Sedang</option>
-                                                    <option value="Berat">Berat</option>
-                                                </select>
-                                            </div>
-                                            <div class="flex-1">
-                                                <div class="flex items-center justify-center h-full">
-                                                    <span
-                                                        class="px-3 py-1 text-sm font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300 rounded-full">
-                                                        Status: Pending
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-end">
-                                                <button type="button" class="reset-filter-btn"
-                                                    data-student-id="{{ $student->id }}"
-                                                    class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-300 rounded-md hover:bg-slate-50 focus:ring-2 focus:ring-blue-500 dark:bg-zink-600 dark:border-zink-500 dark:text-zink-300 dark:hover:bg-zink-700">
-                                                    Reset Filter
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <!-- Table Container - Scrollable -->
                                     <div
                                         class="table-container flex-1 overflow-hidden border border-slate-200 rounded-lg dark:border-zink-500">
@@ -485,7 +449,7 @@
                                                 </thead>
                                                 <tbody>
                                                     @php $counter = 1; @endphp
-                                                    @forelse ($student->recaps as $recap)
+                                                    @forelse ($student->recaps->where('status', 'pending') as $recap)
                                                         <tr class="violation-row bg-white border-b dark:bg-zink-800 dark:border-zink-700 hover:bg-slate-50 dark:hover:bg-zink-700"
                                                             data-category="{{ $recap->violation->category->name ?? '' }}">
                                                             <td class="px-3 py-3 font-medium row-number">

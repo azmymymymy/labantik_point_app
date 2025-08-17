@@ -6,7 +6,7 @@
 
             <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                 <div class="grow">
-                    <h5 class="text-16">Dashboard Kesiswaan</h5>
+                    <h5 class="text-16">Dashboard Super Admin</h5>
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li
@@ -14,10 +14,97 @@
                         <a href="#!" class="text-slate-400 dark:text-zink-200">Dashboards</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
-                        Kesiswaan
+                        Super Admin
                     </li>
                 </ul>
             </div>
+            {{-- Alert untuk error --}}
+            @if ($errors->has('error'))
+                <div
+                    class="relative p-3 pr-12 text-sm text-red-500 border border-transparent rounded-md bg-red-50 dark:bg-red-400/20 mb-4">
+                    <button
+                        class="absolute top-0 bottom-0 right-0 p-3 text-red-200 transition hover:text-red-500 dark:text-red-400/50 dark:hover:text-red-500"
+                        onclick="this.parentElement.style.display='none'">
+                        <i data-lucide="x" class="h-5"></i>
+                    </button>
+                    <div>
+                        <span class="font-bold">⚠️ Peringatan!</span>
+                        {{ $errors->first('error') }}
+
+                        {{-- Tampilkan detail poin jika ada --}}
+                        @if (session('current_total_points') !== null)
+                            <div class="mt-2 text-xs bg-red-100 dark:bg-red-500/10 p-2 rounded border-l-4 border-red-300">
+                                <div class="font-semibold mb-1">📊 Detail Poin:</div>
+
+                                {{-- Poin saat ini --}}
+                                <div class="mb-1">
+                                    • <strong>Total poin saat ini:</strong>
+                                    {{ session('current_total_points') }} poin
+                                    <div class="ml-4 text-xs opacity-75">
+                                        - Terverifikasi:
+                                        {{ session('current_verified_points') ?? 0 }}
+                                        poin<br>
+                                        - Pending:
+                                        {{ session('current_pending_points') ?? 0 }} poin
+                                    </div>
+                                </div>
+
+                                {{-- Poin yang akan ditambah --}}
+                                @if (session('new_points') > 0)
+                                    <div class="mb-1">
+                                        • <strong>Poin yang akan ditambah:</strong>
+                                        {{ session('new_points') }} poin
+                                    </div>
+                                @endif
+
+                                {{-- Total setelah penambahan (jika ada) --}}
+                                @if (session('total_points_after'))
+                                    <div class="mb-1">
+                                        • <strong>Total setelah penambahan:</strong>
+                                        {{ session('total_points_after') }} poin
+                                    </div>
+                                @endif
+
+                                {{-- Kelebihan poin (jika ada) --}}
+                                @if (session('excess_points'))
+                                    <div class="text-red-600 font-semibold">
+                                        • <strong>Kelebihan:</strong>
+                                        {{ session('excess_points') }} poin dari batas
+                                        maksimal
+                                    </div>
+                                @endif
+
+                                <div class="mt-2 pt-1 border-t border-red-200 dark:border-red-400/30 text-xs opacity-80">
+                                    <strong>Batas maksimal:</strong> 100 poin
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endif
+
+            {{-- Alert untuk success --}}
+            @if (session('success') && !$errors->has('error'))
+                <div
+                    class="relative p-3 pr-12 text-sm text-green-500 border border-transparent rounded-md bg-green-50 dark:bg-green-400/20 mb-4">
+                    <button
+                        class="absolute top-0 bottom-0 right-0 p-3 text-green-200 transition hover:text-green-500 dark:text-green-400/50 dark:hover:text-green-500"
+                        onclick="this.parentElement.style.display='none'">
+                        <i data-lucide="x" class="h-5"></i>
+                    </button>
+                    <div>
+                        <span class="font-bold">✅ Berhasil!</span> {{ session('success') }}
+                        @if (session('verified_points') !== null && session('pending_points') !== null)
+                            <div class="mt-2 text-xs">
+                                • Poin verified: {{ session('verified_points') }}<br>
+                                • Poin pending: {{ session('pending_points') }}<br>
+                                • Total semua poin: {{ session('total_all_points') }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endif
+
             <div class="card">
                 <div class="card-body">
                     <h6 class="mb-4 text-15">Datatable Siswa</h6>
@@ -71,8 +158,9 @@
                                         </div>
 
                                         <div class="p-4 overflow-y-auto" style="height: 475px">
-                                            <form method="POST" action="{{ route('superadmin.violations.store', $murid->id) }}">
-    @csrf
+                                            <form method="POST"
+                                                action="{{ route('superadmin.violations.store', $murid->id) }}">
+                                                @csrf
 
                                                 <div class="flex items-center justify-between mb-3">
                                                     <h5 class="text-16 font-medium">Pilih Violations:</h5>
@@ -86,11 +174,11 @@
                                                     @foreach ($categories as $category)
                                                         <div>
                                                             <h4 class="font-medium mb-1">
-                                                                @if ($loop->index == 0)
+                                                                @if ($loop->index == 2)
                                                                     (5-10 poin)
                                                                 @elseif ($loop->index == 1)
                                                                     (10-25 poin)
-                                                                @elseif ($loop->index == 2)
+                                                                @elseif ($loop->index == 0)
                                                                     (25+ poin)
                                                                 @endif
                                                             </h4>
