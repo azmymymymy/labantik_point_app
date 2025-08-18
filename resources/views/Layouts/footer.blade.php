@@ -6,11 +6,11 @@
             <div>
                 <script>
                     document.write(new Date().getFullYear())
-                </script> StarCode Kh
+                </script> Labantik
             </div>
             <div class="hidden lg:block">
                 <div class="ltr:text-right rtl:text-left">
-                    Design & Develop by StarCode Kh
+                    Develop by Labantik
                 </div>
             </div>
         </div>

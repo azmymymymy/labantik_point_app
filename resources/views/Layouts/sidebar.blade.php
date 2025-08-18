@@ -15,19 +15,19 @@ if (count($segments) > 0 && in_array($segments[0], ['bk', 'kesiswaan', 'superadm
         <a href="index.html"
             class="group-data-[sidebar=dark]:hidden group-data-[sidebar=brand]:hidden group-data-[sidebar=modern]:hidden">
             <span class="hidden group-data-[sidebar-size=sm]:block">
-                <img src="assets/images/logo.png" alt="" class="h-6 mx-auto">
+                <img src="assets/images/logo_smk.png" alt="" class="h-6 mx-auto">
             </span>
             <span class="group-data-[sidebar-size=sm]:hidden">
-                <img src="assets/images/logo-dark.png" alt="" class="h-6 mx-auto">
+                <img src="assets/images/logo_smk.png" alt="" class="h-6 mx-auto">
             </span>
         </a>
         <a href="index.html"
             class="hidden group-data-[sidebar=dark]:block group-data-[sidebar=brand]:block group-data-[sidebar=modern]:block">
             <span class="hidden group-data-[sidebar-size=sm]:block">
-                <img src="assets/images/logo.png" alt="" class="h-6 mx-auto">
+                <img src="assets/images/logo_smk.png" alt="" class="h-6 mx-auto">
             </span>
             <span class="group-data-[sidebar-size=sm]:hidden">
-                <img src="assets/images/logo-light.png" alt="" class="h-6 mx-auto">
+                <img src="assets/images/logo_smk.png" alt="" class="h-6 mx-auto">
             </span>
         </a>
         <button type="button" class="hidden p-0 float-end" id="vertical-hover">
@@ -140,7 +140,7 @@ if (count($segments) > 0 && in_array($segments[0], ['bk', 'kesiswaan', 'superadm
                         </a>
                     </li>
                 @endif
-@if ($routePrefix === 'bk.')
+                @if ($routePrefix === 'bk.')
                     <li class="relative group-data-[layout=horizontal]:shrink-0 group/sm">
                         <a href="{{ route($routePrefix . 'recaps') }}"
                             class="relative flex items-center ltr:pl-3 rtl:pr-3 ltr:pr-5 rtl:pl-5 mx-3 my-1 group/menu-link
