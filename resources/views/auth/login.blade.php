@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Sign In | StarCode & Dashboard Template</title>
+    <title>Sign In | Point App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta content="Minimal Admin & Dashboard Template" name="description">
     <meta content="StarCode Kh" name="author">
@@ -32,15 +32,15 @@
         <div class="mb-0 w-screen lg:mx-auto lg:w-[500px] card shadow-lg border-none shadow-slate-100 relative">
             <div class="!px-10 !py-12 card-body">
                 <a href="#!">
-                    <img src="{{ asset('assets/images/logo-light.png') }}" alt=""
-                        class="hidden h-6 mx-auto dark:block">
-                    <img src="{{ asset('assets/images/logo-dark.png') }}" alt=""
-                        class="block h-6 mx-auto dark:hidden">
+                    <img src="{{ asset('assets/images/logo_smk.png') }}" alt=""
+                        class="hidden h-20 mx-auto dark:block">
+                    <img src="{{ asset('assets/images/logo_smk.png') }}" alt=""
+                        class="block h-20 mx-auto dark:hidden">
                 </a>
 
                 <div class="mt-8 text-center">
                     <h4 class="mb-1 text-custom-500 dark:text-custom-500">Welcome Back!</h4>
-                    <p class="text-slate-500 dark:text-zink-200">Sign in to continue to starcode.</p>
+                    <p class="text-slate-500 dark:text-zink-200">Sign in to Point App.</p>
                 </div>
 
                 <!-- Display Success Message -->
