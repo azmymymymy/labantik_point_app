@@ -70,9 +70,9 @@
                               </h6>
                               <a href="#!" class="flex gap-3 mb-3">
                                   <div class="relative inline-block shrink-0">
-                                      <div class="rounded bg-slate-100 dark:bg-zink-500">
+                                      <div class="bg-slate-100 rounded-full ">
                                           <img src="{{ asset('assets/images/user_icon.png') }}" alt=""
-                                              class="w-12 h-12 rounded" />
+                                              class="w-12 h-12 rounded-full" />
                                       </div>
                                       <span
                                           class="-top-1 ltr:-right-1 rtl:-left-1 absolute w-2.5 h-2.5 bg-green-400 border-2 border-white rounded-full dark:border-zink-600"></span>
