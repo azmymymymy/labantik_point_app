@@ -253,9 +253,6 @@
                                                         <th scope="col"
                                                             class="px-4 py-4 w-24 font-semibold text-slate-700 dark:text-zink-200">
                                                             Diupdate oleh</th>
-                                                        <th scope="col"
-                                                            class="px-4 py-4 w-24 font-semibold text-slate-700 dark:text-zink-200">
-                                                            Aksi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -424,6 +421,9 @@
                                                     class="text-xs uppercase bg-slate-50 dark:bg-zink-700 sticky top-0 z-10">
                                                     <tr>
                                                         <th scope="col"
+                                                            class="px-4 py-4 w-32 font-semibold text-slate-700 dark:text-zink-200">
+                                                            Aksi</th>
+                                                        <th scope="col"
                                                             class="px-3 py-3 w-10 font-semibold text-slate-700 dark:text-zink-200">
                                                             No</th>
                                                         <th scope="col"
@@ -450,9 +450,6 @@
                                                         <th scope="col"
                                                             class="px-4 py-4 w-24 font-semibold text-slate-700 dark:text-zink-200">
                                                             Diupdate oleh</th>
-                                                        <th scope="col"
-                                                            class="px-4 py-4 w-32 font-semibold text-slate-700 dark:text-zink-200">
-                                                            Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -460,60 +457,6 @@
                                                     @forelse ($student->recaps->where('status', 'pending' && 'verified') as $recap)
                                                         <tr class="violation-row bg-white border-b dark:bg-zink-800 dark:border-zink-700 hover:bg-slate-50 dark:hover:bg-zink-700"
                                                             data-category="{{ $recap->violation->category->name ?? '' }}">
-                                                            <td class="px-3 py-3 font-medium row-number">
-                                                                {{ $counter++ }}</td>
-                                                            <td class="px-4 py-4 whitespace-nowrap">
-                                                                {{ \Carbon\Carbon::parse($recap->created_at)->format('d/m/Y') }}
-                                                            </td>
-                                                            <td class="px-4 py-4">
-                                                                <div class="violation-name">{{ $recap->violation->name }}
-                                                                </div>
-                                                            </td>
-                                                            <td class="px-4 py-4">
-                                                                <span
-                                                                    class="px-2 py-1 text-xs font-medium rounded-full whitespace-nowrap
-                                                                @if (($recap->violation->category->name ?? '') === 'Berat') bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300
-                                                                @elseif(($recap->violation->category->name ?? '') === 'Sedang') bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300
-                                                                @else bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300 @endif">
-                                                                    {{ $recap->violation->category->name ?? 'Tidak Diketahui' }}
-                                                                </span>
-                                                            </td>
-                                                            <td class="px-4 py-4">
-                                                                <span
-                                                                    class="font-semibold text-red-600 dark:text-red-400 whitespace-nowrap">
-                                                                    {{ $recap->violation->point ?? 0 }}
-                                                                </span>
-                                                            </td>
-                                                            <td class="px-4 py-4">
-                                                                @if ($recap->status == 'pending')
-                                                                    <span
-                                                                        class="px-2 py-1 text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300 rounded-full">
-                                                                        Pending
-                                                                    </span>
-                                                                @endif
-                                                                @if ($recap->status == 'verified')
-                                                                    <span
-                                                                        class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 rounded-full">
-                                                                        Terverifikasi
-                                                                    </span>
-                                                                @endif
-
-                                                            </td>
-                                                            <td class="px-4 py-4">
-                                                                <span class="text-sm text-slate-600 dark:text-zink-300">
-                                                                    {{ $recap->createdBy->name ?? '-' }}
-                                                                </span>
-                                                            </td>
-                                                            <td class="px-4 py-4">
-                                                                <span class="text-sm text-slate-600 dark:text-zink-300">
-                                                                    {{ $recap->verifiedBy->name ?? '-' }}
-                                                                </span>
-                                                            </td>
-                                                            <td class="px-4 py-4">
-                                                                <span class="text-sm text-slate-600 dark:text-zink-300">
-                                                                    {{ $recap->updatedBy->name ?? '-' }}
-                                                                </span>
-                                                            </td>
                                                             <td class="px-4 py-4">
                                                                 <div class="flex gap-2">
 
@@ -583,6 +526,61 @@
 
                                                                 </div>
                                                             </td>
+                                                            <td class="px-3 py-3 font-medium row-number">
+                                                                {{ $counter++ }}</td>
+                                                            <td class="px-4 py-4 whitespace-nowrap">
+                                                                {{ \Carbon\Carbon::parse($recap->created_at)->format('d/m/Y') }}
+                                                            </td>
+                                                            <td class="px-4 py-4">
+                                                                <div class="violation-name">{{ $recap->violation->name }}
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-4 py-4">
+                                                                <span
+                                                                    class="px-2 py-1 text-xs font-medium rounded-full whitespace-nowrap
+                                                                @if (($recap->violation->category->name ?? '') === 'Berat') bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300
+                                                                @elseif(($recap->violation->category->name ?? '') === 'Sedang') bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300
+                                                                @else bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300 @endif">
+                                                                    {{ $recap->violation->category->name ?? 'Tidak Diketahui' }}
+                                                                </span>
+                                                            </td>
+                                                            <td class="px-4 py-4">
+                                                                <span
+                                                                    class="font-semibold text-red-600 dark:text-red-400 whitespace-nowrap">
+                                                                    {{ $recap->violation->point ?? 0 }}
+                                                                </span>
+                                                            </td>
+                                                            <td class="px-4 py-4">
+                                                                @if ($recap->status == 'pending')
+                                                                    <span
+                                                                        class="px-2 py-1 text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300 rounded-full">
+                                                                        Pending
+                                                                    </span>
+                                                                @endif
+                                                                @if ($recap->status == 'verified')
+                                                                    <span
+                                                                        class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 rounded-full">
+                                                                        Terverifikasi
+                                                                    </span>
+                                                                @endif
+
+                                                            </td>
+                                                            <td class="px-4 py-4">
+                                                                <span class="text-sm text-slate-600 dark:text-zink-300">
+                                                                    {{ $recap->createdBy->name ?? '-' }}
+                                                                </span>
+                                                            </td>
+                                                            <td class="px-4 py-4">
+                                                                <span class="text-sm text-slate-600 dark:text-zink-300">
+                                                                    {{ $recap->verifiedBy->name ?? '-' }}
+                                                                </span>
+                                                            </td>
+                                                            <td class="px-4 py-4">
+                                                                <span class="text-sm text-slate-600 dark:text-zink-300">
+                                                                    {{ $recap->updatedBy->name ?? '-' }}
+                                                                </span>
+                                                            </td>
+
                                                         </tr>
                                                     @empty
                                                         <tr class="bg-white dark:bg-zink-800 no-data-row">
